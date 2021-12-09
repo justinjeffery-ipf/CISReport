@@ -1,0 +1,656 @@
+{
+  "1.1.1": [
+    {
+      "match": "aaa new-model",
+      "desc": "Enable 'aaa new-model' (Automated)",
+      "exact": true
+    }
+  ],
+  "1.1.2": [
+    {
+      "match": "aaa authentication login",
+      "desc": "Enable 'aaa authentication login' (Automated)"
+    }
+  ],
+  "1.1.3": [
+    {
+      "match": "aaa authentication enable default",
+      "desc": "Enable 'aaa authentication enable default' (Automated)"
+    }
+  ],
+  "1.1.4": [
+    {
+      "match": "login authentication",
+      "section": "line con",
+      "desc": "Set 'login authentication for 'line con 0' (Manual)"
+    }
+  ],
+  "1.1.5": [
+    {
+      "match": "login authentication",
+      "section": "line tty",
+      "desc": "Set 'login authentication for 'line tty' (Automated)"
+    }
+  ],
+  "1.1.6": [
+    {
+      "match": "login authentication",
+      "section": "line vty",
+      "desc": "Set 'login authentication for 'line vty' (Automated)"
+    }
+  ],
+  "1.1.7": [
+    {
+      "match": "ip http authentication",
+      "desc": "Set 'login authentication for 'ip http' (Manual)"
+    }
+  ],
+  "1.1.8": [
+    {
+      "match": "aaa accounting commands 15",
+      "desc": "Set 'aaa accounting' to log all privileged use commands using 'commands 15' (Automated)"
+    }
+  ],
+  "1.1.9": [
+    {
+      "match": "aaa accounting connection",
+      "desc": "Set 'aaa accounting connection' (Automated)"
+    }
+  ],
+  "1.1.10": [
+    {
+      "match": "aaa accounting exec",
+      "desc": "Set 'aaa accounting exec' (Automated)"
+    }
+  ],
+  "1.1.11": [
+    {
+      "match": "aaa accounting network",
+      "desc": "Set 'aaa accounting network' (Automated)"
+    }
+  ],
+  "1.1.12": [
+    {
+      "match": "aaa accounting system",
+      "desc": "Set 'aaa accounting system' (Automated)"
+    }
+  ],
+  "1.2.1": [
+    {
+      "match": "privilege 1 ",
+      "section": "username",
+      "desc": "Set 'privilege 1' for local users (Manual)"
+    }
+  ],
+  "1.2.2": [
+    {
+      "match": "transport input ssh$",
+      "section": "line vty",
+      "desc": "Set 'transport input ssh' for 'line vty' connections (Automated)"
+    }
+  ],
+  "1.2.3": [
+    {
+      "match": "no exec",
+      "section": "line aux",
+      "desc": "Set 'no exec' for 'line aux 0' (Automated)"
+    }
+  ],
+  "1.2.4": [
+    {
+      "match": "access-list",
+      "desc": "Create 'access-list' for use with 'line vty' (Automated)"
+    }
+  ],
+  "1.2.5": [
+    {
+      "match": "access-class",
+      "section": "line vty",
+      "desc": "Set 'access-class' for 'line vty' (Automated)"
+    }
+  ],
+  "1.2.6": [
+    {
+      "match": "exec-timeout (\\d* \\d*)",
+      "section": "line aux",
+      "max": 600,
+      "time": "%M %S",
+      "desc": "Set 'exec-timeout' to less than or equal to 10 minutes for 'line aux 0' (Automated)"
+    }
+  ],
+  "1.2.7": [
+    {
+      "match": "exec-timeout (\\d* \\d*)",
+      "section": "line con",
+      "max": 600,
+      "time": "%M %S",
+      "desc": "Set 'exec-timeout' to less than or equal to 10 minutes 'line console 0' (Automated)"
+    }
+  ],
+  "1.2.8": [
+    {
+      "match": "exec-timeout (\\d* \\d*)",
+      "section": "line tty",
+      "max": 600,
+      "time": "%M %S",
+      "desc": "Set 'exec-timeout' less than or equal to 10 minutes 'line tty' (Automated)"
+    }
+  ],
+  "1.2.9": [
+    {
+      "match": "exec-timeout (\\d* \\d*)",
+      "section": "line vty",
+      "max": 600,
+      "time": "%M %S",
+      "desc": "Set 'exec-timeout' to less than or equal to 10 minutes 'line vty' (Automated)"
+    }
+  ],
+  "1.2.10": [
+    {
+      "match": "transport input none$",
+      "section": "line aux",
+      "desc": "Set 'transport input none' for 'line aux 0' (Automated)"
+    }
+  ],
+  "1.2.11": [
+    {
+      "match": "ip http max-connections",
+      "desc": "Set 'http Secure-server' limit (Manual)"
+    }
+  ],
+  "1.2.12": [
+    {
+      "match": "ip http timeout-policy idle (\\d*)",
+      "max": 600,
+      "time": "%S",
+      "desc": "Set 'exec-timeout' to less than or equal to 10 min on 'ip http' (Manual)"
+    }
+  ],
+  "1.3.1": [
+    {
+      "section": "banner exec",
+      "desc": "Set the 'banner-text' for 'banner exec' (Manual)"
+    }
+  ],
+  "1.3.2": [
+    {
+      "section": "banner login",
+      "desc": "Set the 'banner-text' for 'banner login' (Manual)"
+    }
+  ],
+  "1.3.3": [
+    {
+      "section": "banner motd",
+      "desc": "Set the 'banner-text' for 'banner motd' (Manual)"
+    }
+  ],
+  "1.3.4": [
+    {
+      "section": "ip admission auth-proxy-banner http",
+      "desc": "Set the 'banner-text' for 'webauth banner' (Manual)"
+    }
+  ],
+  "1.4.1": [
+    {
+      "match": "^enable secret",
+      "desc": "Set 'password' for 'enable secret' (Automated)"
+    }
+  ],
+  "1.4.2": [
+    {
+      "match": "service password-encryption",
+      "exact": true,
+      "desc": "Enable 'service password-encryption' (Automated)"
+    }
+  ],
+  "1.4.3": [
+    {
+      "match": "secret",
+      "section": "username",
+      "desc": "Set 'username secret' for all local users (Automated)"
+    }
+  ],
+  "1.5.1": [
+    {
+      "match": "no snmp-server",
+      "exact": true,
+      "desc": "Set 'no snmp-server' to disable SNMP when unused (Manual)"
+    }
+  ],
+  "1.5.2": [
+    {
+      "match": "snmp-server community private",
+      "section": "snmp-server community",
+      "reverse": true,
+      "desc": "Unset 'private' for 'snmp-server community' (Manual)"
+    }
+  ],
+  "1.5.3": [
+    {
+      "match": "snmp-server community public",
+      "section": "snmp-server community",
+      "reverse": true,
+      "desc": "Unset 'public' for 'snmp-server community' (Manual)"
+    }
+  ],
+  "1.5.4": [
+    {
+      "match": "RW",
+      "section": "snmp-server community",
+      "reverse": true,
+      "desc": "Do not set 'RW' for any 'snmp-server community' (Manual)"
+    }
+  ],
+  "1.5.5": [
+    {
+      "match": "access-list",
+      "section": "snmp-server community",
+      "desc": "Set the ACL for each 'snmp-server community' (Manual)"
+    }
+  ],
+  "1.5.6": [
+    {
+      "match": "access-list",
+      "desc": "Create an 'access-list' for use with SNMP (Manual)"
+    }
+  ],
+  "1.5.7": [
+    {
+      "section": "snmp-server host",
+      "desc": "Set 'snmp-server host' when using SNMP (Manual)"
+    }
+  ],
+  "1.5.8": [
+    {
+      "section": "snmp-server enable traps",
+      "desc": "Set 'snmp-server enable traps snmp' (Manual)"
+    }
+  ],
+  "1.5.9": [
+    {
+      "match": "v3 priv",
+      "section": "snmp-server group",
+      "desc": "Set 'priv' for each 'snmp-server group' using SNMPv3 (Manual)"
+    }
+  ],
+  "1.5.10": [
+    {
+      "match": "priv aes (\\d*)",
+      "section": "snmp-server user",
+      "min": 128,
+      "desc": "Require 'aes 128' as minimum for 'snmp-server user' when using SNMPv3 (Manual)"
+    }
+  ],
+  "1.6.1": [
+    {
+      "match": "login block-for",
+      "desc": "Configure Login Block (Manual)"
+    }
+  ],
+  "1.6.2": [
+    {
+      "match": "auto secure",
+      "desc": "AutoSecure (Manual)"
+    }
+  ],
+  "1.6.3": [
+    {
+      "section": "kerberos",
+      "desc": "Configuring Kerberos (Manual)"
+    }
+  ],
+  "1.6.4": [
+    {
+      "section": "ip admission",
+      "desc": "Configure Web interface (Manual)"
+    }
+  ],
+  "2.1.1.1.1": [
+    {
+      "match": "^hostname",
+      "desc": "Set the 'hostname' (Automated)"
+    }
+  ],
+  "2.1.1.1.2": [
+    {
+      "match": "^ip domain-name",
+      "desc": "Set the 'ip domain-name' (Automated)"
+    }
+  ],
+  "2.1.1.1.4": [
+    {
+      "match": "ip ssh time-out (\\d*)",
+      "max": "120",
+      "time": "%S",
+      "desc": "Set 'seconds' for 'ip ssh timeout' (Manual)"
+    }
+  ],
+  "2.1.1.1.5": [
+    {
+      "match": "ip ssh authentication-retries (\\d*)",
+      "max": "3",
+      "time": "%S",
+      "desc": "Set maximimum value for 'ip ssh authentication-retries' (Automated)"
+    }
+  ],
+  "2.1.1.2": [
+    {
+      "match": "ip ssh version 2",
+      "exact": true,
+      "desc": "Set version 2 for 'ip ssh version' (Automated)"
+    }
+  ],
+  "2.1.2": [
+    {
+      "match": "no cdp run",
+      "exact": true,
+      "desc": "Set 'no cdp run' (Manual)"
+    }
+  ],
+  "2.1.3": [
+    {
+      "match": "ip dhcp bootp ignore",
+      "exact": true,
+      "desc": "Set 'no ip bootp server' (Manual)"
+    }
+  ],
+  "2.1.4": [
+    {
+      "match": "no service dhcp",
+      "exact": true,
+      "desc": "Set 'no service dhcp' (Automated)"
+    }
+  ],
+  "2.1.5": [
+    {
+      "match": "no ip identd",
+      "exact": true,
+      "desc": "Set 'no ip identd' (Automated)"
+    }
+  ],
+  "2.1.6": [
+    {
+      "match": "service tcp-keepalives-in",
+      "exact": true,
+      "desc": "Set 'service tcp-keepalives-in' (Automated)"
+    }
+  ],
+  "2.1.7": [
+    {
+      "match": "service tcp-keepalives-out",
+      "exact": true,
+      "desc": "Set 'service tcp-keepalives-out' (Automated)"
+    }
+  ],
+  "2.1.8": [
+    {
+      "match": "no service pad",
+      "exact": true,
+      "desc": "Set 'no service pad' (Automated)"
+    }
+  ],
+  "2.2.1": [
+    {
+      "match": "logging enable",
+      "section": "log config",
+      "desc": "Set 'logging enable' (Automated)"
+    }
+  ],
+  "2.2.2": [
+    {
+      "match": "logging buffered",
+      "desc": "Set 'buffer size' for 'logging buffered' (Automated)"
+    }
+  ],
+  "2.2.3": [
+    {
+      "match": "logging console critical",
+      "exact": true,
+      "desc": "Set 'logging console critical' (Automated)"
+    }
+  ],
+  "2.2.4": [
+    {
+      "match": "logging host",
+      "desc": "Set IP address for 'logging host' (Automated)"
+    }
+  ],
+  "2.2.5": [
+    {
+      "match": "logging trap informational",
+      "exact": true,
+      "desc": "Set 'logging trap informational' (Manual)"
+    }
+  ],
+  "2.2.6": [
+    {
+      "match": "service timestamps debug datetime",
+      "desc": "Set 'service timestamps debug datetime' (Automated)"
+    }
+  ],
+  "2.2.7": [
+    {
+      "match": "logging source-interface",
+      "desc": "Set 'logging source interface' (Automated)"
+    }
+  ],
+  "2.2.8": [
+    {
+      "match": "login on-failure log",
+      "exact": true,
+      "desc": "Set 'login success/failure logging' (Automated)"
+    },
+    {
+      "match": "login on-success log",
+      "exact": true,
+      "desc": "Set 'login success/failure logging' (Automated)"
+    }
+  ],
+  "2.3.1.2": [
+    {
+      "match": "ntp authenticate",
+      "exact": true,
+      "desc": "Set 'ntp authentication-key' (Automated)"
+    },
+    {
+      "match": "ntp authentication-key .* md5",
+      "desc": "Set 'ntp authentication-key' (Automated)"
+    }
+  ],
+  "2.3.1.3": [
+    {
+      "match": "ntp trusted-key",
+      "desc": "Set the 'ntp trusted-key' (Automated)"
+    }
+  ],
+  "2.3.1.4": [
+    {
+      "match": "key",
+      "section": "ntp server",
+      "desc": "Set 'key' for each 'ntp server' (Manual)"
+    }
+  ],
+  "2.3.2": [
+    {
+      "match": "ntp server",
+      "desc": "Set 'ip address' for 'ntp server' (Automated)"
+    }
+  ],
+  "2.4.1": [
+    {
+      "section": "interface (L|l)oopback",
+      "desc": "Create a single 'interface loopback' (Automated)"
+    }
+  ],
+  "2.4.2": [
+    {
+      "match": "ip radius source-interface (L|l)oopback",
+      "desc": "Set AAA 'source-interface' (Automated)"
+    },
+    {
+      "match": "ip tacacs source-interface (L|l)oopback",
+      "desc": "Set AAA 'source-interface' (Automated)"
+    }
+  ],
+  "2.4.3": [
+    {
+      "match": "ntp source (L|l)oopback",
+      "desc": "Set 'ntp source' to Loopback Interface (Automated)"
+    }
+  ],
+  "2.4.4": [
+    {
+      "match": "ip tftp source-interface (L|l)oopback",
+      "desc": "Set 'ip tftp source-interface' to the Loopback Interface (Automated)"
+    }
+  ],
+  "3.1.1": [
+    {
+      "match": "no ip source-route",
+      "exact": true,
+      "desc": "Set 'no ip source-route' (Automated)"
+    }
+  ],
+  "3.1.2": [
+    {
+      "match": "no ip proxy-arp",
+      "section": "^interface",
+      "desc": "Set 'no ip proxy-arp' (Automated)"
+    }
+  ],
+  "3.1.3": [
+    {
+      "match": "no interface tunnel",
+      "desc": "Set 'no interface tunnel' (Automated)"
+    }
+  ],
+  "3.1.4": [
+    {
+      "match": "ip verify unicast source reachable-via rx",
+      "section": "^interface",
+      "desc": "Set 'ip verify unicast source reachable-via' (Manual)"
+    }
+  ],
+  "3.2.2": [
+    {
+      "match": "ip access-group .* in",
+      "section": "^interface",
+      "desc": "Set inbound 'ip access-group' on the External Interface (Manual)"
+    }
+  ],
+  "3.3.1.1": [
+    {
+      "match": "key chain",
+      "desc": "Set 'key chain' (Automated)"
+    }
+  ],
+  "3.3.1.2": [
+    {
+      "match": "key",
+      "section": "key chain",
+      "desc": "Set 'key' (Manual)"
+    }
+  ],
+  "3.3.1.3": [
+    {
+      "match": "key-string",
+      "section": "key chain",
+      "desc": "Set 'key-string' (Manual)"
+    }
+  ],
+  "3.3.1.4": [
+    {
+      "match": "address-family ipv4 autonomous-system",
+      "section": "router eigrp",
+      "desc": "Set 'address-family ipv4 autonomous-system' (Manual)"
+    }
+  ],
+  "3.3.1.5": [
+    {
+      "match": "af-interface default",
+      "section": "router eigrp",
+      "desc": "Set 'af-interface default' (Manual)"
+    }
+  ],
+  "3.3.1.6": [
+    {
+      "match": "authentication key-chain",
+      "section": "router eigrp",
+      "desc": "Set 'authentication key-chain' (Manual)"
+    }
+  ],
+  "3.3.1.7": [
+    {
+      "match": "authentication mode md5",
+      "section": "router eigrp",
+      "desc": "Set 'authentication mode md5' (Manual)"
+    }
+  ],
+  "3.3.1.8": [
+    {
+      "match": "ip authentication key-chain eigrp",
+      "section": "^interface",
+      "desc": "Set 'ip authentication key-chain eigrp' (Manual)"
+    },
+    {
+      "match": "ip authentication mode eigrp",
+      "section": "^interface",
+      "desc": "Set 'ip authentication key-chain eigrp' (Manual)"
+    }
+  ],
+  "3.3.2.1": [
+    {
+      "match": "authentication message-digest ",
+      "section": "^router ospf",
+      "desc": "Set 'authentication message-digest' for OSPF area (Manual)"
+    }
+  ],
+  "3.3.2.2": [
+    {
+      "match": "ip ospf message-digest-key",
+      "section": "^interface",
+      "desc": "Set 'ip ospf message-digest-key md5' (Manual)"
+    }
+  ],
+  "3.3.3.1": [
+    {
+      "match": "key chain",
+      "desc": "Set 'key chain' (Manual)"
+    }
+  ],
+  "3.3.3.2": [
+    {
+      "match": "key",
+      "section": "key chain",
+      "desc": "Set 'key' (Manual)"
+    }
+  ],
+  "3.3.3.3": [
+    {
+      "match": "key-string",
+      "section": "key chain",
+      "desc": "Set 'key-string' (Manual)"
+    }
+  ],
+  "3.3.3.4": [
+    {
+      "match": "ip rip authentication key-chain",
+      "section": "^interface",
+      "desc": "Set 'ip rip authentication key-chain' (Manual)"
+    }
+  ],
+  "3.3.3.5": [
+    {
+      "match": "ip rip authentication mode md5",
+      "section": "^interface",
+      "desc": "Set 'ip rip authentication mode' to 'md5' (Manual)"
+    }
+  ],
+  "3.3.4.1": [
+    {
+      "match": "neighbor .* password",
+      "section": "router bgp",
+      "desc": "Set 'neighbor password' (Manual)"
+    }
+  ]
+}
