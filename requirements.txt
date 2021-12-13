@@ -1,4 +1,4 @@
-ipfabric>=0.0.10
+ipfabric>=0.3.0
 tabulate
 ciscoconfparse
 pydantic

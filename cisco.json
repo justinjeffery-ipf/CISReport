@@ -77,9 +77,10 @@
   ],
   "1.2.1": [
     {
-      "match": "privilege 1 ",
+      "match": "privilege",
       "section": "username",
-      "desc": "Set 'privilege 1' for local users (Manual)"
+      "desc": "Set 'privilege 1' for local users (Manual)",
+      "reverse": true
     }
   ],
   "1.2.2": [
@@ -98,13 +99,13 @@
   ],
   "1.2.4": [
     {
-      "match": "access-list",
-      "desc": "Create 'access-list' for use with 'line vty' (Automated)"
+      "desc": "Create 'access-list' for use with 'line vty' (Automated)",
+      "error": "Cannot determine"
     }
   ],
   "1.2.5": [
     {
-      "match": "access-class",
+      "match": "access-class .* in",
       "section": "line vty",
       "desc": "Set 'access-class' for 'line vty' (Automated)"
     }
@@ -114,7 +115,7 @@
       "match": "exec-timeout (\\d* \\d*)",
       "section": "line aux",
       "max": 600,
-      "time": "%M %S",
+      "regex": "%M %S",
       "desc": "Set 'exec-timeout' to less than or equal to 10 minutes for 'line aux 0' (Automated)"
     }
   ],
@@ -123,7 +124,7 @@
       "match": "exec-timeout (\\d* \\d*)",
       "section": "line con",
       "max": 600,
-      "time": "%M %S",
+      "regex": "%M %S",
       "desc": "Set 'exec-timeout' to less than or equal to 10 minutes 'line console 0' (Automated)"
     }
   ],
@@ -132,7 +133,7 @@
       "match": "exec-timeout (\\d* \\d*)",
       "section": "line tty",
       "max": 600,
-      "time": "%M %S",
+      "regex": "%M %S",
       "desc": "Set 'exec-timeout' less than or equal to 10 minutes 'line tty' (Automated)"
     }
   ],
@@ -141,7 +142,7 @@
       "match": "exec-timeout (\\d* \\d*)",
       "section": "line vty",
       "max": 600,
-      "time": "%M %S",
+      "regex": "%M %S",
       "desc": "Set 'exec-timeout' to less than or equal to 10 minutes 'line vty' (Automated)"
     }
   ],
@@ -162,7 +163,7 @@
     {
       "match": "ip http timeout-policy idle (\\d*)",
       "max": 600,
-      "time": "%S",
+      "regex": "%S",
       "desc": "Set 'exec-timeout' to less than or equal to 10 min on 'ip http' (Manual)"
     }
   ],
@@ -250,8 +251,8 @@
   ],
   "1.5.6": [
     {
-      "match": "access-list",
-      "desc": "Create an 'access-list' for use with SNMP (Manual)"
+      "desc": "Create an 'access-list' for use with SNMP (Manual)",
+      "error": "Cannot determine"
     }
   ],
   "1.5.7": [
@@ -275,10 +276,8 @@
   ],
   "1.5.10": [
     {
-      "match": "priv aes (\\d*)",
-      "section": "snmp-server user",
-      "min": 128,
-      "desc": "Require 'aes 128' as minimum for 'snmp-server user' when using SNMPv3 (Manual)"
+      "desc": "Require 'aes 128' as minimum for 'snmp-server user' when using SNMPv3 (Manual)",
+      "error": "Cannot determine"
     }
   ],
   "1.6.1": [
@@ -289,8 +288,8 @@
   ],
   "1.6.2": [
     {
-      "match": "auto secure",
-      "desc": "AutoSecure (Manual)"
+      "desc": "AutoSecure (Manual)",
+      "error": "Cannot determine"
     }
   ],
   "1.6.3": [
@@ -317,11 +316,17 @@
       "desc": "Set the 'ip domain-name' (Automated)"
     }
   ],
+  "2.1.1.1.3": [
+    {
+      "desc": "Set 'modulus' to greater than or equal to 2048 for 'crypto key generate rsa' (Manual)",
+      "error": "Cannot determine"
+    }
+  ],
   "2.1.1.1.4": [
     {
       "match": "ip ssh time-out (\\d*)",
       "max": "120",
-      "time": "%S",
+      "regex": "%S",
       "desc": "Set 'seconds' for 'ip ssh timeout' (Manual)"
     }
   ],
@@ -329,8 +334,8 @@
     {
       "match": "ip ssh authentication-retries (\\d*)",
       "max": "3",
-      "time": "%S",
-      "desc": "Set maximimum value for 'ip ssh authentication-retries' (Automated)"
+      "regex": "%S",
+      "desc": "Set maximum value for 'ip ssh authentication-retries' (Automated)"
     }
   ],
   "2.1.1.2": [
@@ -349,7 +354,7 @@
   ],
   "2.1.3": [
     {
-      "match": "ip dhcp bootp ignore",
+      "match": "no ip bootp server",
       "exact": true,
       "desc": "Set 'no ip bootp server' (Manual)"
     }
@@ -478,8 +483,9 @@
   ],
   "2.4.1": [
     {
-      "section": "interface (L|l)oopback",
-      "desc": "Create a single 'interface loopback' (Automated)"
+      "section": "^interface (L|l)oopback",
+      "desc": "Create a single 'interface loopback' (Automated)",
+      "regex": "interface"
     }
   ],
   "2.4.2": [
@@ -514,7 +520,7 @@
   "3.1.2": [
     {
       "match": "no ip proxy-arp",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'no ip proxy-arp' (Automated)"
     }
   ],
@@ -527,14 +533,14 @@
   "3.1.4": [
     {
       "match": "ip verify unicast source reachable-via rx",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip verify unicast source reachable-via' (Manual)"
     }
   ],
   "3.2.2": [
     {
       "match": "ip access-group .* in",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set inbound 'ip access-group' on the External Interface (Manual)"
     }
   ],
@@ -589,12 +595,12 @@
   "3.3.1.8": [
     {
       "match": "ip authentication key-chain eigrp",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip authentication key-chain eigrp' (Manual)"
     },
     {
       "match": "ip authentication mode eigrp",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip authentication key-chain eigrp' (Manual)"
     }
   ],
@@ -608,7 +614,7 @@
   "3.3.2.2": [
     {
       "match": "ip ospf message-digest-key",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip ospf message-digest-key md5' (Manual)"
     }
   ],
@@ -635,14 +641,14 @@
   "3.3.3.4": [
     {
       "match": "ip rip authentication key-chain",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip rip authentication key-chain' (Manual)"
     }
   ],
   "3.3.3.5": [
     {
       "match": "ip rip authentication mode md5",
-      "section": "^interface",
+      "section": "^interface (?!(L|l)oopback)",
       "desc": "Set 'ip rip authentication mode' to 'md5' (Manual)"
     }
   ],
@@ -650,6 +656,7 @@
     {
       "match": "neighbor .* password",
       "section": "router bgp",
+      "subsection": "^ neighbor",
       "desc": "Set 'neighbor password' (Manual)"
     }
   ]
