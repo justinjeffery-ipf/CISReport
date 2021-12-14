@@ -231,16 +231,13 @@ class CISReport:
     def print_report_headers(matches):
         headers = RuleHeaders()
         formatted = list()
-        prev = None
-        nxt = None
+        nxt = headers.headers.pop(0)
+        formatted.append({'status': '-' * sum(c.isdigit() for c in nxt[0]), 'rule': nxt[0], 'description': nxt[1]})
+        nxt = headers.headers.pop(0)
         for match in matches:
-            if not prev and not nxt:
-                prev = headers.headers.pop(0)
-                formatted.append({'status': None, 'rule': prev[0], 'description': prev[1]})
-                nxt = headers.headers.pop(0)
             while nxt[0] and re.search(f"^{nxt[0]}", match['rule']):
-                formatted.append({'status': None, 'rule': nxt[0], 'description': nxt[1]})
-                prev = nxt
+                formatted.append({'status': '-' * sum(c.isdigit() for c in nxt[0]),
+                                  'rule': nxt[0], 'description': nxt[1]})
                 try:
                     nxt = headers.headers.pop(0)
                 except IndexError:
