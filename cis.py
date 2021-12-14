@@ -8,9 +8,25 @@ from typing import Optional
 from copy import deepcopy
 from collections import defaultdict
 
-
 with open('cisco.json', 'r') as f:
     RULES = loads(f.read())
+
+
+class RuleHeaders:
+    def __init__(self):
+        self.headers = [('1', 'Management Plane'),
+                        ('1.1', 'Local Authentication, Authorization and Accounting (AAA) Rules'),
+                        ('1.2', 'Access Rules'), ('1.3', 'Banner Rules'), ('1.4', 'Password Rules'),
+                        ('1.5', 'SNMP Rules'), ('1.6', 'Login Enhancements'), ('2', 'Control Plane'),
+                        ('2.1', 'Global Service Rules'), ('2.1.1', 'Setup SSH'),
+                        ('2.1.1.1', 'Configure Prerequisites for the SSH Service'), ('2.2', 'Logging Rules'),
+                        ('2.3', 'NTP Rules'), ('2.3.1', 'Require Encryption Keys for NTP'), ('2.4', 'Loopback Rules'),
+                        ('3', 'Data Plane'), ('3.1', 'Routing Rules'), ('3.2', 'Border Router Filtering'),
+                        ('3.3', 'Neighbor Authentication'),
+                        ('3.3.1', 'Require EIGRP Authentication if Protocol is Used'),
+                        ('3.3.2', 'Require OSPF Authentication if Protocol is Used'),
+                        ('3.3.3', 'Require RIPv2 Authentication if Protocol is Used'),
+                        ('3.3.4', 'Require BGP Authentication if Protocol is Used')]
 
 
 @dataclass
@@ -58,30 +74,36 @@ class CISReport:
     def search_config(self):
         """
         A function to search for a specific list of string within the list of configuration files, only prints results.
-        :param rules: list: List of rules to match
-        :param config: str: Configuration of device
         :return:
         """
         for rule, items in RULES.items():
             for item in items:
-                result = Result(**item, rule=rule)
-                if result.check_section:
-                    objs = self.parse.find_objects(result.check_section)
-                    if not objs:
-                        result.status_name = 'N/A'
-                        self.results.append(result)
-                        continue
-                if 'error' in item:
-                    result.status_name = 'MANUAL'
-                    self.results.append(result)
-                elif 'section' in item:
-                    self.section(result)
-                elif 'time' in item and item['time'] == "%S":
-                    result.status = self.seconds(result)
-                    self.results.append(result)
-                else:
-                    result.status = True if self.parse.find_lines(result.match, exactmatch=result.exact) else False
-                    self.results.append(result)
+                self.check_rules(item, rule)
+
+    def check_rules(self, item, rule):
+        result = Result(**item, rule=rule)
+        if self.check_na(result):
+            return
+        if 'error' in item:
+            result.status_name = 'MANUAL'
+            self.results.append(result)
+        elif 'section' in item:
+            self.section(result)
+        elif 'time' in item and item['time'] == "%S":
+            result.status = self.seconds(result)
+            self.results.append(result)
+        else:
+            result.status = True if self.parse.find_lines(result.match, exactmatch=result.exact) else False
+            self.results.append(result)
+
+    def check_na(self, result):
+        if result.check_section:
+            objs = self.parse.find_objects(result.check_section)
+            if not objs:
+                result.status_name = 'N/A'
+                self.results.append(result)
+                return True
+        return False
 
     def section(self, result: Result):
         objs = self.parse.find_objects(result.section)
@@ -113,22 +135,26 @@ class CISReport:
             else:
                 value = re.match(r.match, obj.text)
             if value:
-                if isinstance(value, re.Match):
-                    acl = value.group(1)
-                else:
-                    acl = re.search(r.match, value[0].text).group(1)
-                try:
-                    acls = self.parse.find_objects(f"^access-list {int(acl)} ")
-                except ValueError:
-                    acls = self.parse.find_objects(f"^ip access-list (extended|standard) {acl}$")
-                if acls:
-                    r.config = f"access-list {acl}"
-                    r.status = True
-                else:
-                    r.config = f"MISSING access-list {acl}"
+                r = self.find_acl(value, r)
             else:
                 r.config = obj.text
             self.results.append(r)
+
+    def find_acl(self, value, r):
+        if isinstance(value, re.Match):
+            acl = value.group(1)
+        else:
+            acl = re.search(r.match, value[0].text).group(1)
+        try:
+            acls = self.parse.find_objects(f"^access-list {int(acl)} ")
+        except ValueError:
+            acls = self.parse.find_objects(f"^ip access-list (extended|standard) {acl}$")
+        if acls:
+            r.config = f"access-list {acl}"
+            r.status = True
+        else:
+            r.config = f"MISSING access-list {acl}"
+        return r
 
     def search_objs(self, objs, result: Result):
         for obj in objs:
@@ -152,7 +178,7 @@ class CISReport:
     def bpg_neighbor(self, obj, result: Result):
         neighbors = defaultdict(list)
         childs = obj.re_search_children(result.subsection)
-        neigh_regex = re.compile(r'^ neighbor ([\d\.]*) ')
+        neigh_regex = re.compile(r'^ neighbor ([\d.]*) ')
         for child in childs:
             neigh = neigh_regex.match(child.text)
             neighbors[neigh.group(1)].append(child.text)
@@ -198,4 +224,26 @@ class CISReport:
                     tmp['status'] = 'PARTIAL'
                 tmp.update(headers[rule])
                 matches.append(tmp)
+        matches = self.print_report_headers(matches)
         print(tabulate(matches, headers="keys"))
+
+    @staticmethod
+    def print_report_headers(matches):
+        headers = RuleHeaders()
+        formatted = list()
+        prev = None
+        nxt = None
+        for match in matches:
+            if not prev and not nxt:
+                prev = headers.headers.pop(0)
+                formatted.append({'status': None, 'rule': prev[0], 'description': prev[1]})
+                nxt = headers.headers.pop(0)
+            while nxt[0] and re.search(f"^{nxt[0]}", match['rule']):
+                formatted.append({'status': None, 'rule': nxt[0], 'description': nxt[1]})
+                prev = nxt
+                try:
+                    nxt = headers.headers.pop(0)
+                except IndexError:
+                    nxt = (None, None)
+            formatted.append(match)
+        return formatted
