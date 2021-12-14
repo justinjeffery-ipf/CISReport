@@ -78,25 +78,26 @@ class CISReport:
         """
         for rule, items in RULES.items():
             for item in items:
-                self.check_rules(item, rule)
+                self._check_rules(item, rule)
+        return [m.export() for m in self.results]
 
-    def check_rules(self, item, rule):
+    def _check_rules(self, item, rule):
         result = Result(**item, rule=rule)
-        if self.check_na(result):
+        if self._check_na(result):
             return
         if 'error' in item:
             result.status_name = 'MANUAL'
             self.results.append(result)
         elif 'section' in item:
-            self.section(result)
+            self._section(result)
         elif 'time' in item and item['time'] == "%S":
-            result.status = self.seconds(result)
+            result.status = self._seconds(result)
             self.results.append(result)
         else:
             result.status = True if self.parse.find_lines(result.match, exactmatch=result.exact) else False
             self.results.append(result)
 
-    def check_na(self, result):
+    def _check_na(self, result):
         if result.check_section:
             objs = self.parse.find_objects(result.check_section)
             if not objs:
@@ -105,12 +106,12 @@ class CISReport:
                 return True
         return False
 
-    def section(self, result: Result):
+    def _section(self, result: Result):
         objs = self.parse.find_objects(result.section)
         if not objs:
             self.results.append(result)
         elif result.acl:
-            self.search_acl(objs, result)
+            self._search_acl(objs, result)
         elif result.regex == 'interface':
             if len(objs) == 1:
                 result.status = True
@@ -118,16 +119,16 @@ class CISReport:
                 result.config = f'{len(objs)} Loopback interfaces found.'
             self.results.append(result)
         else:
-            self.search_objs(objs, result)
+            self._search_objs(objs, result)
 
-    def seconds(self, result: Result):
+    def _seconds(self, result: Result):
         value = self.parse.re_match_iter_typed(result.match)
         check = False
         if value:
             check = True if int(value) <= result.max else False
         return check
 
-    def search_acl(self, objs, result: Result):
+    def _search_acl(self, objs, result: Result):
         for obj in objs:
             r = deepcopy(result)
             if obj.has_children:
@@ -135,12 +136,12 @@ class CISReport:
             else:
                 value = re.match(r.match, obj.text)
             if value:
-                r = self.find_acl(value, r)
+                r = self._find_acl(value, r)
             else:
                 r.config = obj.text
             self.results.append(r)
 
-    def find_acl(self, value, r):
+    def _find_acl(self, value, r):
         if isinstance(value, re.Match):
             acl = value.group(1)
         else:
@@ -156,16 +157,16 @@ class CISReport:
             r.config = f"MISSING access-list {acl}"
         return r
 
-    def search_objs(self, objs, result: Result):
+    def _search_objs(self, objs, result: Result):
         for obj in objs:
             r = deepcopy(result)
             if not r.match:
                 r.status = True
             elif obj.has_children and r.regex == "%M %S":
-                r.status = self.min_sec(obj, r)
+                r.status = self._min_sec(obj, r)
                 r.config = obj.text
             elif r.subsection:
-                self.bpg_neighbor(obj, r)
+                self._bpg_neighbor(obj, r)
                 continue
             elif obj.has_children:
                 r.status = True if obj.re_search_children(r.match) else False
@@ -175,7 +176,7 @@ class CISReport:
                 r.config = obj.text
             self.results.append(r)
 
-    def bpg_neighbor(self, obj, result: Result):
+    def _bpg_neighbor(self, obj, result: Result):
         neighbors = defaultdict(list)
         childs = obj.re_search_children(result.subsection)
         neigh_regex = re.compile(r'^ neighbor ([\d.]*) ')
@@ -192,7 +193,7 @@ class CISReport:
             self.results.append(r)
 
     @staticmethod
-    def min_sec(obj, result: Result):
+    def _min_sec(obj, result: Result):
         value = obj.re_match_iter_typed(result.match)
         check = False
         if value:
@@ -224,11 +225,11 @@ class CISReport:
                     tmp['status'] = 'PARTIAL'
                 tmp.update(headers[rule])
                 matches.append(tmp)
-        matches = self.print_report_headers(matches)
+        matches = self._print_report_headers(matches)
         print(tabulate(matches, headers="keys"))
 
     @staticmethod
-    def print_report_headers(matches):
+    def _print_report_headers(matches):
         headers = RuleHeaders()
         formatted = list()
         nxt = headers.headers.pop(0)

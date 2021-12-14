@@ -15,8 +15,8 @@ if __name__ == '__main__':
             continue
         print(hostname)
         cisreport = CISReport(config.text)
-        cisreport.search_config()
-        cisreport.print_report(verbose=True)
+        rules = cisreport.search_config()
+        cisreport.print_report(verbose=True)  # Run search_config first then use this to print to screen
         """
         Verbose will print a line for each section, for instance a configuration check on username:
         > FAIL 1.2.1 Set 'privilege 1' for local users (Manual)  privilege username username cisco privilege 15 secret 4 
@@ -32,9 +32,8 @@ if __name__ == '__main__':
         """
         print()
         """
-        # Results stored in cisreport.results after running search_config
-        # Run export on each result to get correct output, example:
-        print(cisreport.results[0].export())
+        rules = cisreport.search_config()
+        print(rules[0])
         > {'status': 'PASS', 'rule': '1.1.1', 'description': "Enable 'aaa new-model' (Automated)", 
            'match': 'aaa new-model', 'section': None, 'config': None, 'error': None}
         """
